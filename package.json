@@ -1,0 +1,11 @@
+{
+  "name": "application-name",
+  "version": "0.0.1",
+  "dependencies": {
+    "aws-sdk": "^2.1.30",
+    "bluebird": "^2.9.26",
+    "cheerio": "^0.19.0",
+    "hapi": "^8.5.1",
+    "request": "^2.55.0"
+  }
+}
