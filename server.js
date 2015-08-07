@@ -25,9 +25,18 @@ MongoClient.connect("mongodb://Serge:serge5958164@ds031852.mongolab.com:31852/fi
 // Create a server with a host and port
 var server = new Hapi.Server();
 server.connection({
-    port: 8080
+    port: process.env.PORT
 });
+/*
+app.set('port', (process.env.PORT || 5000));
 
+var server = app.listen(app.get('port'), function () {
+//var server = app.listen(4000, function () {
+    var host = server.address().address;
+    var port = server.address().port;
+    console.log('Listening at http://%s:%s', host, port);
+});
+*/
 server.route({
     method: 'GET',
     path: '/',
