@@ -1,12 +1,8 @@
 var Hapi = require('hapi');
-var AWS = require('aws-sdk');
 var MongoClient = require('mongodb').MongoClient;
 var mongoHandler = require('./mongoHandler');
-var S3Handler = require('./S3Handler');
 var youtubeHandler = require('./YoutubeToPlaylist');
 
-
-AWS.config.loadFromPath('./config.json');
 
 var db;
 
@@ -17,8 +13,6 @@ MongoClient.connect("mongodb://Serge:serge5958164@ds031852.mongolab.com:31852/fi
         db = data;
         mongoHandler.setupPopular(db);
         mongoHandler.setupSongs(db);
-        mongoHandler.setAws(AWS);
-        S3Handler.setAws(AWS);
     } else {
         console.log(err);
     }
@@ -62,13 +56,6 @@ server.route({
 });
 
 
-server.route({
-    method: 'GET',
-    path:'/uploadPlaylist/{key}',
-    handler: function (request, reply) {
-        youtubeHandler.uploadPlaylistToS3(request.params.key,reply);
-    }
-});
 
 server.route({
     method: 'GET',
@@ -79,24 +66,6 @@ server.route({
         });
     }
 });
-
-
-server.route({
-    method: 'GET',
-    path:'/insertFromOutputToMongo/{key}',
-    handler: function (request, reply) {
-        mongoHandler.insertToMongoFromS3(request.params.key,reply);
-    }
-});
-
-server.route({
-    method: 'GET',
-    path:'/insertFromPopularToMongo',
-    handler: function (request, reply) {
-        mongoHandler.insertPopularToMongoFromS3();
-    }
-});
-
 
 
 

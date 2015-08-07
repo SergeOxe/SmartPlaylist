@@ -66,7 +66,6 @@ var uploadPlaylistToS3 = function uploadPlaylistToS3(url,reply){
         return;
     }
     getPlaylistFromYoutubeUrl(url).then(function(data){
-        S3Handler.uploadToS3Playlist(url,data,reply);
         var result = "";
         var lines = data.split(/\r?\n/);
         lines.forEach(function (line) {
