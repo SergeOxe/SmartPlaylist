@@ -3,7 +3,7 @@
  */
 var request = require('request');
 var cheerio = require('cheerio');
-var S3Handler = require('./S3Handler');
+//var S3Handler = require('./S3Handler');
 var Promise = require('bluebird');
 
 
