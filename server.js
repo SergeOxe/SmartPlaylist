@@ -60,10 +60,9 @@ server.route({
     method: 'GET',
     path:'/uploadPlaylist/{key}',
     handler: function (request, reply) {
-        youtubeHandler.displayPlayList(request.params.key,reply);
+        youtubeHandler.uploadPlaylistToS3(request.params.key,reply);
     }
 });
-
 
 
 server.route({
