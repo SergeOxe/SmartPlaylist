@@ -66,7 +66,18 @@ var uploadPlaylistToS3 = function uploadPlaylistToS3(url,reply){
         return;
     }
     getPlaylistFromYoutubeUrl(url).then(function(data){
-        reply(data);
+        //S3Handler.uploadToS3Playlist(url,data,reply);
+        var result = "";
+        var lines = data.split(/\r?\n/);
+        lines.forEach(function (line) {
+            if (line.length > 0) {
+                line = replaceAll("_", " ", line.trim());
+                if (line.length > 0) {
+                    result += line + "\n";
+                }
+            }
+        });
+        reply(result);
     });
 
 }
