@@ -1,37 +1,19 @@
 <!DOCTYPE html>
 <html>
-<head lang="en">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
-    <script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
-    <script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
+    <head lang="en">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel='stylesheet' media='screen and (min-width: 551px)' href='browserStyle.css' />
+        <link rel='stylesheet' media='screen and (max-width: 550px)' href='mobileStyle.css' />
+        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
+        <script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+        <script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
 
-    <script>
 
-        function getBestSongs() {
-            var xmlhttp;
-            if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
-                xmlhttp = new XMLHttpRequest();
-            }
-            else {// code for IE6, IE5
-                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-            }
-            xmlhttp.onreadystatechange = function () {
-                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                    addSongsToPlayList(xmlhttp.responseText,true);
-                }
-            }
-            xmlhttp.open("GET", "/getPopularPlaylist", true);
-            xmlhttp.send();
-        }
 
-        function uploadPlaylist() {
-            var xmlhttp;
-            var pl = document.getElementById("playListToUpload").value;
-            if (!pl.match(/^((http:\/\/)|(https:\/\/)|(HTTP:\/\/)|(HTTPS:\/\/))?www\..*\?.+/i) != "") {
-                window.alert("Input is not a playlist's URL!\nPlease Enter again");
-            } else {
-                pl = pl.match(/\?(.*)/i)[1];
+        <script>
+
+            function getBestSongs() {
+                var xmlhttp;
                 if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
                     xmlhttp = new XMLHttpRequest();
                 }
@@ -43,92 +25,94 @@
                         addSongsToPlayList(xmlhttp.responseText,true);
                     }
                 }
-                xmlhttp.open("GET", "/uploadPlaylist/" + pl, true);
+                xmlhttp.open("GET", "http://smartplaylist.herokuapp.com/getPopularPlaylist", true);
                 xmlhttp.send();
             }
-        }
 
-
-        function sendSongGetPlayList() {
-            var xmlhttp;
-            var song = document.getElementById("songName").value;
-            if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
-                xmlhttp = new XMLHttpRequest();
-            }
-            else {// code for IE6, IE5
-                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-            }
-            xmlhttp.onreadystatechange = function () {
-                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                    addSongsToPlayList(xmlhttp.responseText,true);
+            function uploadPlaylist() {
+                var xmlhttp;
+                var pl = document.getElementById("playListToUpload").value;
+                if (!pl.match(/^((http:\/\/)|(https:\/\/)|(HTTP:\/\/)|(HTTPS:\/\/))?www\..*\?.+/i) != "") {
+                    window.alert("Input is not a playlist's URL!\nPlease Enter again");
+                } else {
+                    pl = pl.match(/\?(.*)/i)[1];
+                    if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+                        xmlhttp = new XMLHttpRequest();
+                    }
+                    else {// code for IE6, IE5
+                        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                    }
+                    xmlhttp.onreadystatechange = function () {
+                        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                            addSongsToPlayList(xmlhttp.responseText,true);
+                        }
+                    }
+                    xmlhttp.open("GET", "http://smartplaylist.herokuapp.com/uploadPlaylist/" + pl, true);
+                    xmlhttp.send();
                 }
             }
-            xmlhttp.open("GET", "/generatePlaylistBySong/" + song, true);
-            xmlhttp.send();
-        }
 
-        function addSongsToPlayList(input,addLinks){
-            var list = input.split(/\r?\n/);
-            var result = "";
-            for (i = 0; i < list.length; i++) {
-                if (list[i] === "Song was not found in our database") {
-                    result += "<li><a href=https://www.youtube.com/results?search_query=hits>" +list[i] + "</a></li>";
-                    continue;
+
+            function sendSongGetPlayList() {
+                var xmlhttp;
+                var song = document.getElementById("songName").value;
+                if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+                    xmlhttp = new XMLHttpRequest();
                 }
-                if(list[i].length  == 0 ){
-                    continue;
+                else {// code for IE6, IE5
+                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
                 }
-                if(addLinks) {
-                    result += "<li><a href=https://www.youtube.com/results?search_query=" + list[i].replace(/ /g, '+') + ">" + list[i] + "</a></li>";
-                }else {
-                    result += "<li>"+list[i]+"</li>";
+                xmlhttp.onreadystatechange = function () {
+                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                        addSongsToPlayList(xmlhttp.responseText,true);
+                    }
                 }
+                xmlhttp.open("GET", "http://smartplaylist.herokuapp.com/generatePlaylistBySong/" + song, true);
+                xmlhttp.send();
             }
-            document.getElementById("playlist").innerHTML = result;
-            $('ul').listview('refresh');
-        }
 
-    </script>
-</head>
-<body>
-<table>
-    <tr>
-        <td width = "300px" valign="top" style="border: none">
+            function addSongsToPlayList(input,addLinks){
+                var list = input.split(/\r?\n/);
+                var result = "";
+                for (i = 0; i < list.length; i++) {
+                    if (list[i] === "Song was not found in our database") {
+                        result += "<li><a href=https://www.youtube.com/results?search_query=hits>" +list[i] + "</a></li>";
+                        continue;
+                    }
+                    if(list[i].length  == 0 ){
+                        continue;
+                    }
+                    if(addLinks) {
+                        result += "<li><a href=https://www.youtube.com/results?search_query=" + list[i].replace(/ /g, '+') + ">" + list[i] + "</a></li>";
+                    }else {
+                        result += "<li>"+list[i]+"</li>";
+                    }
+                }
+                document.getElementById("playlist").innerHTML = result;
+                $('ul').listview('refresh');
+            }
+
+        </script>
+    </head>
+    <body>
+        <div valign="top" class='container' id="buttonsContainer">
             <H2 >Upload your youtube playlist</H2>
-            <input type="text" style="height:40px; width:350px" id="playListToUpload"></textarea>
-            <div id="Uploaded"></div>
-            <br><br>
-            <input type="submit" name="Load" class = btn value="Load Button" onclick="uploadPlaylist()"/>
+            <input type="text" style="height:40px;" id="playListToUpload" class="textArea"/>
+            <br>
+            <input type="submit" name="Load" class = 'btn' value="Load Button" onclick="uploadPlaylist()"/>
             <hr style=" margin-top: 50px;">
-            <form>
-                <H2>Top songs playlist</H2>
-                <input type="button"  data-role="button" class = btn value = "Top songs playlist" onclick="getBestSongs()"/>
-            </form >
+            <H2>Smart playlist generator</H2>
+            <input type="text" style="height:40px;" id="songName" class="textArea"/>
+            <br>
+            <input type="button" style="height:40px;" class = 'btn' value = "Generate smart playlist" id="sendSong" onclick="sendSongGetPlayList()"/>
             <hr style=" margin-top: 50px;">
-            <form>
-                <H2>Smart playlist generator</H2>
-                <input type="text" style="height:40px; width:350px" id="songName"></textarea>
-                <br><br>
-                <input type="button" class = btn value = "Generate smart playlist" id="sendSong" onclick="sendSongGetPlayList()"/>
-            </form>
-        </td>
-
-        <td style="padding-left: 20px;" valign="top">
+            <H2>Top songs playlist</H2>
+            <input type="button" class = 'btn' value = "Top songs playlist" onclick="getBestSongs()"/>
+            <hr style=" margin-top: 50px;">
+        </div>
+        <div id="playListContainer" style="border-width: 1px;"  valign="top" class="container">
             <H2>Your playlist</H2>
-            <ul data-role="listview" readonly style="border-style: solid;height:500px; width:500px; border-width: 1px;overflow:hidden; overflow-y:scroll;" id="playlist" data-role="listview" ></ul>
-        </td>
-    </tr>
-</table>
-</body>
-<footer>
-</footer>
-<style>
-    .btn{
-        background-color: blanchedalmond;
-    }
-    textarea{
-        font-size: 15px;
-    }
-
-</style>
+            <ul data-role="listview" readonly style="border-style: solid;height:500px; border-width: 1px;overflow:hidden; overflow-y:scroll;" data-role="listview" > </ul>
+        </div>
+    </body>
 </html>

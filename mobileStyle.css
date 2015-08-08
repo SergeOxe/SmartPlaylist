@@ -1,0 +1,27 @@
+.btn{
+    background-color: blanchedalmond;
+}
+textarea{
+    font-size: 15px;
+}
+.container{
+    display: block;
+    text-align: center;
+    margin-left: 2.5%;
+    width:95% !important;
+}
+.btn{
+    background-color: darkgoldenrod !important;
+}
+.textArea{
+    background-color: white!important;
+}
+ul{
+    background-color: white;
+}
+li{
+    background-color: white!important;
+}
+div{
+    font-family:Palatino Linotype;
+}

@@ -1,0 +1,33 @@
+.btn{
+    background-color: blanchedalmond;
+}
+textarea{
+    font-size: 15px;
+}
+.container {
+    display: inline-block;
+    text-align: center;
+    margin-left: 15px;
+}
+#playListContainer{
+    width:500px;
+}
+#buttonsContainer{
+    width:390px;
+}
+.btn{
+    background-color: darkgoldenrod !important;
+}
+.textArea{
+    background-color: white!important;
+}
+ul{
+    background-color: white!important;
+}
+li{
+    background-color: white!important;
+}
+div{
+    font-family:Palatino Linotype;
+}
+
