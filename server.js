@@ -58,7 +58,7 @@ server.route({
 
 server.route({
     method: 'GET',
-    path:'/getPlaylist/{key}',
+    path:'/uploadPlaylis/{key}',
     handler: function (request, reply) {
         youtubeHandler.displayPlayList(request.params.key,reply);
     }

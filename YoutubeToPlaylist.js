@@ -66,17 +66,7 @@ var uploadPlaylistToS3 = function uploadPlaylistToS3(url,reply){
         return;
     }
     getPlaylistFromYoutubeUrl(url).then(function(data){
-        var result = "";
-        var lines = data.split(/\r?\n/);
-        lines.forEach(function (line) {
-            if (line.length > 0) {
-                line = replaceAll("_", " ", line.trim());
-                if (line.length > 0) {
-                    result += line + "\n";
-                }
-            }
-        });
-        reply(result);
+        reply(data);
     });
 
 }
