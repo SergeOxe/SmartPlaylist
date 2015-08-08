@@ -26,12 +26,15 @@ var setupPopular = function setupPopular(db){
 
 
 
-//Get Sorted Playlist
 var getSortedPlaylist = function getSortedPlaylist (Song){
     var defer = Promise.defer();
     //var key = replaceAll(" ","_",Song);
-    var band = Song.split("-")[0].toLowerCase().trim();
-    songsCollection.findOne({name: Song.toLowerCase()},function(err,data) {
+    var song = replaceAll("[^-^a-zA-Z^0-9^_^\\(^\\)^/]", " ",Song);
+    var song = replaceAll(" +"," ",song);
+    console.log(song);
+    var band = Song.split("-")[0].toLowerCase();
+    console.log(band);
+    songsCollection.findOne({name: song.toLowerCase()},function(err,data) {
         if (!data) {
             songsCollection.findOne({band:band},function(err,data) {
                 if (!data) {
@@ -44,7 +47,8 @@ var getSortedPlaylist = function getSortedPlaylist (Song){
                     //console.log(sorted);
                     var result = "";
                     sorted.forEach(function(song) {
-                        result += replaceAll("_"," ",song.suggest) + " \n";
+                        var songName = song.suggest.charAt(0).toUpperCase() + song.suggest.slice(1);
+                        result += replaceAll("_"," ",songName) + " \n";
                     });
                     defer.resolve(result);
                 }
